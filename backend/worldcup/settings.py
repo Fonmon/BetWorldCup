@@ -14,7 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+BASE_DIR_PREV = os.path.join(BASE_DIR, os.path.pardir)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'backend.urls'
+ROOT_URLCONF = 'worldcup.urls'
 
 TEMPLATES = [
     {
@@ -71,11 +71,11 @@ TEMPLATES = [
 WEBPACK_LOADER = {
     'DEFAULT':{
         'BUNDLE_DIR_NAME': 'bundles/',
-        'STATS_FILE':os.path.join(BASE_DIR,'webpack-stats.dev.json'),
+        'STATS_FILE':os.path.join(BASE_DIR_PREV,'webpack-stats.dev.json'),
     }
 }
 
-WSGI_APPLICATION = 'backend.wsgi.application'
+WSGI_APPLICATION = 'worldcup.wsgi.application'
 
 
 # Database
