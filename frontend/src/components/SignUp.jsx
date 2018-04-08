@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Form, Grid, Message, Segment } from 'semantic-ui-react'
 
-const Login = () => (
+const SignUp = () => (
     <div className='login-form'>
         <style>{`
             body > div,
@@ -20,26 +20,36 @@ const Login = () => (
                     <Segment stacked>
                         <Form.Input
                             fluid
-                            icon='user'
-                            iconPosition='left'
-                            placeholder='Nombre de usuario'
+                            placeholder='Nombres'
                         />
                         <Form.Input
                             fluid
-                            icon='lock'
-                            iconPosition='left'
+                            placeholder='Apellidos'
+                        />
+                        <Form.Input
+                            fluid
+                            placeholder='Nombre de usuario'
+                        />
+                        <Message
+                            error
+                            header='Action Forbidden'
+                            content='You can only sign up for an account once with a given e-mail address.'
+                        />
+                        <Form.Input
+                            fluid
                             placeholder='Contraseña'
                             type='password'
                         />
-                        <Button color='red' fluid size='large'>Ingresar</Button>
+                        <Form.Input
+                            fluid
+                            placeholder='Código de autorización'
+                        />
+                        <Button href="/signup/2" color='red' fluid size='large'>Siguiente</Button>
                     </Segment>
                 </Form>
-                <Message>
-                    ¿No tienes cuenta aún? <a href='/signup/1'>Regístrate</a>
-                </Message>
             </Grid.Column>
         </Grid>
     </div>
-)
+);
 
-export default Login;
+export default SignUp;
