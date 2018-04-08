@@ -23,7 +23,7 @@ ROUND = (
 class Team(models.Model):
     name = models.TextField(null=False)
     group = models.CharField(choices=ROUND,null=False,max_length=5)
-    shortcut = models.CharField(null=False, default='', unique=True,max_length=5)
+    shortcut = models.CharField(default='', unique=True,max_length=5)
 
 class Match(models.Model):
     team_A = models.ForeignKey(Team,on_delete=models.CASCADE,null=True,related_name='team_A')
