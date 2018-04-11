@@ -1,55 +1,60 @@
-import React from 'react'
-import { Button, Form, Grid, Message, Segment } from 'semantic-ui-react'
+import React, {Component} from 'react';
 
-const SignUp = () => (
-    <div className='login-form'>
-        <style>{`
-            body > div,
-            body > div > div,
-            body > div > div > div.login-form {
-                height: 100%;
-            }
-        `}</style>
-        <Grid
-            textAlign='center'
-            style={{ height: '100%' }}
-            verticalAlign='middle'
-        >
-            <Grid.Column style={{ maxWidth: 450 }}>
-                <Form size='large'>
-                    <Segment stacked>
-                        <Form.Input
-                            fluid
-                            placeholder='Nombres'
-                        />
-                        <Form.Input
-                            fluid
-                            placeholder='Apellidos'
-                        />
-                        <Form.Input
-                            fluid
-                            placeholder='Nombre de usuario'
-                        />
-                        <Message
-                            error
-                            header='Action Forbidden'
-                            content='You can only sign up for an account once with a given e-mail address.'
-                        />
-                        <Form.Input
-                            fluid
-                            placeholder='Contraseña'
-                            type='password'
-                        />
-                        <Form.Input
-                            fluid
-                            placeholder='Código de autorización'
-                        />
-                        <Button href="/signup/2" color='red' fluid size='large'>Siguiente</Button>
-                    </Segment>
-                </Form>
-            </Grid.Column>
-        </Grid>
-    </div>
-);
+import PersonalInfo from './signup/PersonalInfo';
+import PickGroupTeams from './signup/PickGroupTeams';
+import PickListTeams from './signup/PickListTeams';
+
+class SignUp extends Component{
+
+    constructor(){
+        super();
+        this.state = {
+            step: 1,
+            round: 32,
+            dataSource:[]
+        }
+    }
+
+    onNext(data){
+        let step = this.state.step;
+        let key = `step_${step}`;
+        if(step >= 2 && step <=3)
+            this.cleanData(data);
+        this.setState({[key]:data});
+        this.setState({step:step+1});
+
+        if(step+1 >= 3){
+            this.setState({dataSource:data,round:this.state.round/2});
+        }
+        if(step+1 === 6)
+            this.onSubmit();
+    }
+
+    onSubmit(){
+
+    }
+
+    cleanData(listTeams){
+        listTeams.forEach(function(team){
+            team.active = false;
+        })
+    }
+
+    render(){
+        return (
+            <div>
+                {this.state.step === 1 &&
+                    <PersonalInfo onNext={this.onNext.bind(this)} />}
+                {this.state.step === 2 &&
+                    <PickGroupTeams onNext={this.onNext.bind(this)} />}
+                {this.state.step >= 3 && this.state.step <= 4 &&
+                    <PickListTeams onNext={this.onNext.bind(this)}
+                        dataSource={this.state.dataSource}
+                        round={this.state.round} />
+                }
+            </div>
+        );
+    }
+}
 
 export default SignUp;

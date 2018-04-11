@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 import { Button, Grid, Message, Segment, Table, Image, Header } from 'semantic-ui-react';
 
-import Utils from "../utils/Utils";
+import Utils from "../../utils/Utils";
 
-class PickTeams extends Component{
+class PickGroupTeams extends Component{
 
     constructor(){
         super();
         this.state = {
             groups: [],
             selectedTeams: {},
-            nextError: true
+            submitError: true
         }
     }
 
@@ -34,15 +34,16 @@ class PickTeams extends Component{
         return ascii - 65;
     }
 
+    getKeyGroup(groupName){
+        return `G${groupName.charAt(groupName.length - 1)}`
+    }
+
     onPickTeam(event,team){
-        let teamRound = {
-            id: team.id,
-            round: team.group
-        }
+        let keyGroup = this.getKeyGroup(team.group);
         let selectedTeams = this.state.selectedTeams;
-        if(!selectedTeams[team.group])
-            selectedTeams[team.group] = [];
-        let groupTeams = selectedTeams[team.group];
+        if(!selectedTeams[keyGroup])
+            selectedTeams[keyGroup] = [];
+        let groupTeams = selectedTeams[keyGroup];
         let indexTeam = groupTeams.map(selectedTeam => selectedTeam.id)
             .indexOf(team.id);
         if(indexTeam >= 0){
@@ -51,7 +52,7 @@ class PickTeams extends Component{
         }else{
             if(groupTeams.length > 1){
                 let teamRemoved = groupTeams.splice(0,1)[0];
-                let originalTeam = this.state.groups[this.indexOfGroup(team.group)]
+                let originalTeam = this.state.groups[this.indexOfGroup(keyGroup)]
                     .teams.find(originalTeamIT => originalTeamIT.id === teamRemoved.id);
                 originalTeam.active = false;
             }
@@ -61,14 +62,23 @@ class PickTeams extends Component{
         this.setState({selectedTeams:selectedTeams});
     }
 
-    onNext(){
-        this.setState({nextError:true});
+    handleSubmit(){
+        this.setState({submitError:true});
         let selectedTeams = this.state.selectedTeams;
         // TODO: validate
+        this.props.onNext(this.convertMapToList(selectedTeams));
         if(selectedTeams.length !== this.state.groups.length){
-            this.setState({nextError:false});
+            this.setState({submitError:false});
             return;
         }
+    }
+
+    convertMapToList(mapTeams){
+        let teamsList = []
+        Object.keys(mapTeams).forEach((groupKey) => {
+            teamsList = teamsList.concat(mapTeams[groupKey]);
+        });
+        return teamsList;
     }
 
     //http://www.iconarchive.com/show/all-country-flag-icons-by-custom-icon-design.5.html 
@@ -90,10 +100,10 @@ class PickTeams extends Component{
                             <Segment stacked>
                                 <h2>Elección de equipos</h2>
                                 <p>Por favor elija los dos equipos que cree pasarán de cada grupo</p>
-                                <Button onClick={() => this.onNext()}>Siguiente</Button>
+                                <Button onClick={() => this.handleSubmit()}>Siguiente</Button>
                                 <Message
                                     error
-                                    hidden={this.state.nextError}
+                                    hidden={this.state.submitError}
                                     header='Incompleto'
                                     content='Debe seleccionar dos equipos por cada uno de los grupos.'
                                 />
@@ -116,7 +126,7 @@ class PickTeams extends Component{
                                                             onClick={(event)=>this.onPickTeam(event,team)}
                                                         >
                                                             <Header as='h5' image>
-                                                                <Image src={require(`../resources/images/team_icons/${team.shortcut}.png`)}
+                                                                <Image src={require(`../../resources/images/team_icons/${team.shortcut}.png`)}
                                                                     size='mini' />
                                                                 <Header.Content>
                                                                     {team.name}
@@ -148,7 +158,7 @@ class PickTeams extends Component{
                                                             onClick={(event)=>this.onPickTeam(event,team)}
                                                         >
                                                             <Header as='h5' image>
-                                                                <Image src={require(`../resources/images/team_icons/${team.shortcut}.png`)}
+                                                                <Image src={require(`../../resources/images/team_icons/${team.shortcut}.png`)}
                                                                     size='mini' />
                                                                 <Header.Content>
                                                                     {team.name}
@@ -170,4 +180,4 @@ class PickTeams extends Component{
     }
 }
 
-export default PickTeams;
+export default PickGroupTeams;

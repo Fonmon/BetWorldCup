@@ -6,7 +6,6 @@ import Utils from "./utils/Utils";
 // Components
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
-import PickTeams from "./components/PickTeams";
 import NotFound from "./components/NotFound";
 
 const NotValidRoute = ({component: Component, ...rest}) => (
@@ -24,8 +23,7 @@ class App extends Component {
                 <Switch>
                     <NotValidRoute exact path="/" component={Login} />
                     <NotValidRoute exact path="/login" component={Login} />
-                    <NotValidRoute exact path="/signup/1" component={SignUp} />
-                    <NotValidRoute exact path="/signup/2" component={PickTeams} />
+                    <NotValidRoute exact path="/signup" component={SignUp} />
                     <Route component={NotFound} />
                 </Switch>
             </BrowserRouter>
