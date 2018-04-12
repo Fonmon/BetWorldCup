@@ -48,3 +48,7 @@ class QualifiedTeams(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     team = models.ForeignKey(Team,on_delete=models.CASCADE)
 
+class RegistrationCode(models.Model):
+    auth_code = models.CharField(null=False, max_length=50)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    used = models.BooleanField(default=False, null=False)

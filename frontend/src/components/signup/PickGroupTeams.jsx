@@ -64,13 +64,22 @@ class PickGroupTeams extends Component{
 
     handleSubmit(){
         this.setState({submitError:true});
+        let error = false;
         let selectedTeams = this.state.selectedTeams;
-        // TODO: validate
-        this.props.onNext(this.convertMapToList(selectedTeams));
-        if(selectedTeams.length !== this.state.groups.length){
+        if(Object.keys(selectedTeams).length !== this.state.groups.length){
             this.setState({submitError:false});
             return;
         }
+        Object.keys(selectedTeams).forEach(group => {
+            if(selectedTeams[group].length !== 2){
+                error = true;
+                return;
+            }
+        });
+        if(error)
+            this.setState({submitError:false});
+        else
+            this.props.onNext(this.convertMapToList(selectedTeams));
     }
 
     convertMapToList(mapTeams){
@@ -100,9 +109,8 @@ class PickGroupTeams extends Component{
                             <Segment stacked>
                                 <h2>Elección de equipos</h2>
                                 <p>Por favor elija los dos equipos que cree pasarán de cada grupo</p>
-                                <Button onClick={() => this.handleSubmit()}>Siguiente</Button>
-                                <Message
-                                    error
+                                <Button color='red' onClick={() => this.handleSubmit()}>Siguiente</Button>
+                                <Message error
                                     hidden={this.state.submitError}
                                     header='Incompleto'
                                     content='Debe seleccionar dos equipos por cada uno de los grupos.'

@@ -22,6 +22,10 @@ class Utils{
     static getTeams(){
         return axios.get('/api/team');
     }
+
+    static validateSignup(personalInfo){
+        return axios.post('/api/user/validate_signup',personalInfo);
+    }
 }
 
 export default Utils;

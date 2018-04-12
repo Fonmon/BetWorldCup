@@ -39,13 +39,12 @@ class PickListTeams extends Component{
     handleSubmit(){
         this.setState({submitError:true});
         let selectedTeams = this.state.selectedTeams;
-        // TODO: validate
+        if(selectedTeams.length !== (this.state.round / 2)){
+            this.setState({submitError:false});
+            return;
+        }
         this.props.onNext(selectedTeams);
         this.setState({selectedTeams:[]});
-        // if(selectedTeams.length !== this.state.groups.length){
-        //     this.setState({submitError:false});
-        //     return;
-        // }
     }
 
     //http://www.iconarchive.com/show/all-country-flag-icons-by-custom-icon-design.5.html 
@@ -67,7 +66,7 @@ class PickListTeams extends Component{
                             <Segment stacked>
                                 <h2>Elección de equipos</h2>
                                 <p>Por favor elija los {this.state.round/2} equipos que cree pasarán a la siguiente ronda</p>
-                                <Button onClick={this.handleSubmit.bind(this)}>Siguiente</Button>
+                                <Button color='red' onClick={this.handleSubmit.bind(this)}>Siguiente</Button>
                                 <Message
                                     error
                                     hidden={this.state.submitError}

@@ -35,7 +35,7 @@ const Login = () => (
                     </Segment>
                 </Form>
                 <Message>
-                    ¿No tienes cuenta aún? <a href='/signup/1'>Regístrate</a>
+                    ¿No tienes cuenta aún? <a href='/signup'>Regístrate</a>
                 </Message>
             </Grid.Column>
         </Grid>

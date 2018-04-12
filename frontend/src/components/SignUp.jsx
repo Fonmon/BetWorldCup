@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import PersonalInfo from './signup/PersonalInfo';
 import PickGroupTeams from './signup/PickGroupTeams';
 import PickListTeams from './signup/PickListTeams';
+import PodiumTeams from './signup/PodiumTeams';
 
 class SignUp extends Component{
 
@@ -31,7 +32,9 @@ class SignUp extends Component{
     }
 
     onSubmit(){
-
+        console.log('registro acabado :D');
+        // show message
+        // redirect to login
     }
 
     cleanData(listTeams){
@@ -50,8 +53,10 @@ class SignUp extends Component{
                 {this.state.step >= 3 && this.state.step <= 4 &&
                     <PickListTeams onNext={this.onNext.bind(this)}
                         dataSource={this.state.dataSource}
-                        round={this.state.round} />
-                }
+                        round={this.state.round} />}
+                {this.state.step === 5 &&
+                    <PodiumTeams onNext={this.onNext.bind(this)}
+                        dataSource={this.state.dataSource} />}
             </div>
         );
     }
