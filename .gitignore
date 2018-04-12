@@ -116,3 +116,4 @@ build/
 bundles/
 
 migrations/
+package-lock.json
