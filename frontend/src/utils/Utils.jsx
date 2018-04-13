@@ -8,12 +8,16 @@ class Utils{
         return token ? true : false;
     }
 
+    static redirectTo(path){
+        window.location = path;
+    }
+
     ///////////////////////////////////////////////////////////////////////
     // CALLS TO API
     ///////////////////////////////////////////////////////////////////////
 
     static authenticate(username, password){
-        return axios.post('api-token-auth/',{
+        return axios.post('/api/auth/',{
             username:username,
             password:password
         });
@@ -25,6 +29,10 @@ class Utils{
 
     static validateSignup(personalInfo){
         return axios.post('/api/user/validate_signup',personalInfo);
+    }
+
+    static signUp(data){
+        return axios.post('/api/user',data);
     }
 }
 

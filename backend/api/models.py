@@ -14,7 +14,7 @@ ROUND = (
     ('R8','Cuartos de Final'),
     ('R4','Semifinales'),
     ('R3','Partido por Tercer Lugar'),
-    ('R2','Finales'),
+    ('R2','Final'),
     ('C3','Tercer Lugar'),
     ('C2','Subcampeón'),
     ('C1','Campeón')
@@ -47,6 +47,7 @@ class QualifiedTeams(models.Model):
     round = models.CharField(choices=ROUND,null=False,max_length=5)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     team = models.ForeignKey(Team,on_delete=models.CASCADE)
+    points = models.IntegerField(default=0)
 
 class RegistrationCode(models.Model):
     auth_code = models.CharField(null=False, max_length=50)
