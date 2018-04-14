@@ -1,11 +1,34 @@
 import axios from 'axios';
 
 export const TOKEN_KEY = "TOKEN_WORLDCUP_KEY";
+export const STAFF_KEY = "IS_STAFF_KEY";
+export const ROUND = {
+    'GA':'Grupo A',
+    'GB':'Grupo B',
+    'GC':'Grupo C',
+    'GD':'Grupo D',
+    'GE':'Grupo E',
+    'GF':'Grupo F',
+    'GG':'Grupo G',
+    'GH':'Grupo H',
+    'R16':'Octavos de Final',
+    'R8':'Cuartos de Final',
+    'R4':'Semifinales',
+    'R3':'Partido por Tercer Lugar',
+    'R2':'Final',
+    'C3':'Tercer Lugar',
+    'C2':'Subcampeón',
+    'C1':'Campeón'
+}
 
 class Utils{
     static isAuthenticated(){
         let token = localStorage.getItem(TOKEN_KEY);
         return token ? true : false;
+    }
+
+    static isAuthorized(){
+        return localStorage.getItem(STAFF_KEY) === 'true';
     }
 
     static redirectTo(path){
@@ -38,6 +61,30 @@ class Utils{
 
     static signUp(data){
         return axios.post('/api/user',data);
+    }
+
+    static getMatchResults(is_real){
+        return axios.get(`/api/user/matches?is_real=${is_real}`,{
+            headers: {
+                'Authorization':`Token ${localStorage.getItem(TOKEN_KEY)}`
+            }
+        });
+    }
+
+    static saveMatchResults(data, is_real){
+        return axios.patch(`/api/user/matches?is_real=${is_real}`, data,{
+            headers: {
+                'Authorization':`Token ${localStorage.getItem(TOKEN_KEY)}`
+            }
+        });
+    }
+
+    static isStaff(){
+        return axios.get(`/api/user/is_staff`,{
+            headers: {
+                'Authorization':`Token ${localStorage.getItem(TOKEN_KEY)}`
+            }
+        });
     }
 }
 

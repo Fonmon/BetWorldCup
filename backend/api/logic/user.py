@@ -38,3 +38,7 @@ def signup(signupData):
         addQualifiedTeams(user.id,4,signupData['step_4'])
         addQualifiedPodium(user.id, signupData['step_5'])
     return (True,'')
+
+def isStaff(user_id):
+    user = User.objects.get(id = user_id)
+    return user.is_staff

@@ -8,6 +8,7 @@ import Login from "./components/pages/Login";
 import SignUp from "./components/pages/SignUp";
 import NotFound from "./components/pages/NotFound";
 import Home from "./components/pages/Home";
+import Results from "./components/pages/Results";
 
 const NotValidRoute = ({component: Component, ...rest}) => (
     <Route{...rest} render={(props) => (
@@ -25,6 +26,14 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     )} />
 );
 
+const StaffRoute = ({ component: Component, ...rest }) => (
+    <Route {...rest} render={(props) => (
+        Utils.isAuthenticated() && Utils.isAuthorized()
+        ? <Component {...props} />
+        : <Redirect to='/home' />
+    )} />
+);
+
 class App extends Component {
     render() {
         return (
@@ -34,6 +43,7 @@ class App extends Component {
                     <NotValidRoute exact path="/login" component={Login} />
                     <NotValidRoute exact path="/signup" component={SignUp} />
                     <PrivateRoute exact path="/home" component={Home} />
+                    <StaffRoute exact path="/results" component={Results} />
                     <Route component={NotFound} />
                 </Switch>
             </BrowserRouter>

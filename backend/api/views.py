@@ -4,6 +4,7 @@ from rest_framework import status
 
 from .logic.user import *
 from .logic.team import *
+from .logic.match import *
 
 @api_view(['GET','POST'])
 @permission_classes([])
@@ -29,3 +30,21 @@ def view_user(request):
         if success:
             return Response(message, status = status.HTTP_200_OK)
         return Response(message, status = status.HTTP_409_CONFLICT)
+
+@api_view(['GET'])
+def view_is_staff(request):
+    user_id = request.user.id
+    if request.method == 'GET':
+        return Response(isStaff(user_id), status = status.HTTP_200_OK)
+
+@api_view(['GET','PATCH'])
+def view_match(request):
+    user_id = request.user.id
+    is_real = (request.query_params.get('is_real') == 'true')
+    if request.method == 'GET':
+        return Response(getMatchResults(user_id,is_real),status=status.HTTP_200_OK)
+    if request.method == 'PATCH':
+        success, response = saveMatchResult(user_id,request.data,is_real)
+        if success:
+            return Response(response,status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_204_NO_CONTENT)
