@@ -12,6 +12,11 @@ class Utils{
         window.location = path;
     }
 
+    static signOut(){
+        localStorage.removeItem(TOKEN_KEY);
+        Utils.redirectTo('/');
+    }
+
     ///////////////////////////////////////////////////////////////////////
     // CALLS TO API
     ///////////////////////////////////////////////////////////////////////
