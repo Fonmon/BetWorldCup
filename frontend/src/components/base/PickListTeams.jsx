@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { Button, Grid, Message, Segment, Table, Image, Header } from 'semantic-ui-react';
 
+import {WarningSignUpMessage} from '../../utils/Utils';
+
 class PickListTeams extends Component{
 
     constructor(props){
@@ -66,6 +68,7 @@ class PickListTeams extends Component{
                             <Segment stacked>
                                 <h2>Elección de equipos</h2>
                                 <p>Por favor elija los {this.state.round/2} equipos que cree pasarán a la siguiente ronda</p>
+                                <WarningSignUpMessage />
                                 <Button color='red' onClick={this.handleSubmit.bind(this)}>Siguiente</Button>
                                 <Message
                                     error

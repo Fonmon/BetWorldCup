@@ -8,6 +8,7 @@ import Login from "./components/pages/Login";
 import SignUp from "./components/pages/SignUp";
 import NotFound from "./components/pages/NotFound";
 import Home from "./components/pages/Home";
+import Ranking from "./components/pages/Ranking";
 import Results from "./components/pages/Results";
 
 const NotValidRoute = ({component: Component, ...rest}) => (
@@ -43,6 +44,7 @@ class App extends Component {
                     <NotValidRoute exact path="/login" component={Login} />
                     <NotValidRoute exact path="/signup" component={SignUp} />
                     <PrivateRoute exact path="/home" component={Home} />
+                    <PrivateRoute exact path="/ranking" component={Ranking} />
                     <StaffRoute exact path="/results" component={Results} />
                     <Route component={NotFound} />
                 </Switch>

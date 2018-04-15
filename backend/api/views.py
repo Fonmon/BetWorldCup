@@ -5,6 +5,7 @@ from rest_framework import status
 from .logic.user import *
 from .logic.team import *
 from .logic.match import *
+from .logic.points import *
 
 @api_view(['GET','POST'])
 @permission_classes([])
@@ -47,4 +48,9 @@ def view_match(request):
         success, response = saveMatchResult(user_id,request.data,is_real)
         if success:
             return Response(response,status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(response,status=status.HTTP_403_FORBIDDEN)
+
+@api_view(['GET'])
+def view_ranking(request):
+    if request.method == 'GET':
+        return Response(getRanking(),status=status.HTTP_200_OK)

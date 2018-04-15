@@ -34,22 +34,32 @@ class MatchComponent extends Component{
         let scope = this;
         Utils.saveMatchResults(this.state.match_result,this.state.real)
             .then(function(response){
-                if(response.status === 200){
-                    let result_id = response.data.id,
-                        score_A = response.data.score_A,
-                        score_B = response.data.score_B;
-                    scope.setState({
-                        match_result:{
-                            ...scope.state.match_result,
-                            result_id: result_id,
-                            team_A_score : score_A,
-                            team_B_score : score_B
-                        }
-                    });
-                }
+                let result_id = response.data.id,
+                    score_A = response.data.score_A,
+                    score_B = response.data.score_B;
+                scope.setState({
+                    match_result:{
+                        ...scope.state.match_result,
+                        result_id: result_id,
+                        team_A_score : score_A,
+                        team_B_score : score_B
+                    }
+                });
             }).catch(function(error){
                 if(!error.response)
                     console.log('Error de conexión');
+                else if(error.response.status === 403){
+                    let score_A = error.response.data.result_id ? error.response.data.team_A_score : '',
+                        score_B = error.response.data.result_id ? error.response.data.team_B_score : '';
+                    scope.setState({
+                        match_result:{
+                            ...scope.state.match_result,
+                            team_A_score : score_A,
+                            team_B_score : score_B,
+                            disabled: true
+                        }
+                    });
+                }
             })
     }
 

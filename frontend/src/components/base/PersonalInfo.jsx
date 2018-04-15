@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Form, Grid, Message, Segment } from 'semantic-ui-react';
 
-import Utils from '../../utils/Utils';
+import Utils,{WarningSignUpMessage} from '../../utils/Utils';
 
 class PersonalInfo extends Component{
 
@@ -61,6 +61,7 @@ class PersonalInfo extends Component{
                     <Grid.Column style={{ maxWidth: 450 }}>
                         <Segment stacked>
                             <h2>Información personal</h2>
+                            <WarningSignUpMessage />
                             <Form size='large' onSubmit={this.handleSubmit} error={this.state.formError}>
                                 <Form.Input fluid name="names"
                                     value={names}

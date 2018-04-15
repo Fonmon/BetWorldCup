@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Button, Grid, Message, Segment, Table, Image, Header } from 'semantic-ui-react';
 
-import Utils from "../../utils/Utils";
+import Utils,{WarningSignUpMessage} from "../../utils/Utils";
 
 class PickGroupTeams extends Component{
 
@@ -109,6 +109,7 @@ class PickGroupTeams extends Component{
                             <Segment stacked>
                                 <h2>Elección de equipos</h2>
                                 <p>Por favor elija los dos equipos que cree pasarán de cada grupo</p>
+                                <WarningSignUpMessage />
                                 <Button color='red' onClick={() => this.handleSubmit()}>Siguiente</Button>
                                 <Message error
                                     hidden={this.state.submitError}

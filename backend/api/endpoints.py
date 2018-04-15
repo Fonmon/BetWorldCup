@@ -9,4 +9,5 @@ urlpatterns = [
     url( r'^api/user/validate_signup?$', views.view_validate_signup, name='view_validate_signup' ),
     url( r'^api/user/is_staff?$', views.view_is_staff, name='view_is_staff' ),
     url( r'^api/user/matches?$', views.view_match, name='view_match' ),
+    url( r'^api/ranking?$', views.view_ranking, name='view_ranking' ),
 ]

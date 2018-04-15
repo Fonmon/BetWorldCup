@@ -1,4 +1,13 @@
+import React from 'react';
 import axios from 'axios';
+import {Message} from 'semantic-ui-react';
+
+export const WarningSignUpMessage = () => (
+    <Message warning>
+        <Message.Header>¡ Advertencia !</Message.Header>
+        <p>Después de continuar, no podrá modificar su elección.</p>
+    </Message>
+);
 
 export const TOKEN_KEY = "TOKEN_WORLDCUP_KEY";
 export const STAFF_KEY = "IS_STAFF_KEY";
@@ -81,6 +90,14 @@ class Utils{
 
     static isStaff(){
         return axios.get(`/api/user/is_staff`,{
+            headers: {
+                'Authorization':`Token ${localStorage.getItem(TOKEN_KEY)}`
+            }
+        });
+    }
+
+    static getRanking(){
+        return axios.get(`/api/ranking`,{
             headers: {
                 'Authorization':`Token ${localStorage.getItem(TOKEN_KEY)}`
             }
