@@ -30,7 +30,7 @@ def getMatchResults(user_id,is_real):
                                 WHERE api_match.team_A_id IS NOT NULL AND api_match.team_B_id IS NOT NULL) matches
                             WHERE matches.team_A_id = team.id) matches
                         WHERE matches.team_B_id = team.id
-                        ORDER BY date''', [now,user_id])
+                        ORDER BY date DESC''', [now,user_id])
         group_matches = dict()
         for row in dictfetchall(cursor):
             row['date'] = row['date'].strftime(dateFormat)
@@ -66,7 +66,7 @@ def saveMatchResult(user_id, match_result, is_real):
     return (False,match_result)
 
 def getNow():
-    fakeDate = date(2018,6,15)
+    fakeDate = date(2018,6,26)
     fakeTime = time(6,00)
     fakeNow = datetime.combine(fakeDate,fakeTime)
     #datetime.now()

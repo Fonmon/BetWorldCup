@@ -67,7 +67,7 @@ class PickListTeams extends Component{
                         <Grid.Column style={{ maxWidth: 700 }}>
                             <Segment stacked>
                                 <h2>Elección de equipos</h2>
-                                <p>Por favor elija los {this.state.round/2} equipos que cree pasarán a la siguiente ronda</p>
+                                <p>Por favor elija los {this.state.round/2} equipos que {this.props.label} a la siguiente ronda</p>
                                 <WarningSignUpMessage />
                                 <Button color='red' onClick={this.handleSubmit.bind(this)}>Siguiente</Button>
                                 <Message

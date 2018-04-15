@@ -10,6 +10,7 @@ const FixedMenu = () => (
                 <Menu.Item active={window.location.pathname === '/home'} as='a' href='/home'>Inicio</Menu.Item>
                 <Menu.Item active={window.location.pathname === '/points'} as='a' href='/points'>Mis puntos</Menu.Item>
                 <Menu.Item active={window.location.pathname === '/ranking'} as='a' href='/ranking'>Ranking</Menu.Item>
+                <Menu.Item active={window.location.pathname === '/rules'} as='a' href='/rules'>Reglas</Menu.Item>
                 {Utils.isAuthorized() &&
                     <Menu.Item active={window.location.pathname === '/results'} as='a' href='/results'>Reales</Menu.Item>
                 }

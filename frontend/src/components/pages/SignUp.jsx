@@ -87,9 +87,10 @@ class SignUp extends Component{
                 {this.state.step === 1 &&
                     <PersonalInfo onNext={this.onNext.bind(this)} />}
                 {this.state.step === 2 &&
-                    <PickGroupTeams onNext={this.onNext.bind(this)} />}
+                    <PickGroupTeams label='cree pasarán' onNext={this.onNext.bind(this)} />}
                 {this.state.step >= 3 && this.state.step <= 4 &&
                     <PickListTeams onNext={this.onNext.bind(this)}
+                        label='cree pasarán'
                         dataSource={this.state.dataSource}
                         round={this.state.round} />}
                 {this.state.step === 5 &&

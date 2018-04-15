@@ -45,7 +45,7 @@ class Utils{
     }
 
     static signOut(){
-        localStorage.removeItem(TOKEN_KEY);
+        localStorage.clear();
         Utils.redirectTo('/');
     }
 
@@ -98,6 +98,22 @@ class Utils{
 
     static getRanking(){
         return axios.get(`/api/ranking`,{
+            headers: {
+                'Authorization':`Token ${localStorage.getItem(TOKEN_KEY)}`
+            }
+        });
+    }
+
+    static saveRealTeams(step, teams){
+        return axios.post(`/api/team/real?step=${step}`,teams,{
+            headers: {
+                'Authorization':`Token ${localStorage.getItem(TOKEN_KEY)}`
+            }
+        });
+    }
+
+    static getRealTeams(){
+        return axios.get(`/api/team/real`,{
             headers: {
                 'Authorization':`Token ${localStorage.getItem(TOKEN_KEY)}`
             }

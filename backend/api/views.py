@@ -7,7 +7,7 @@ from .logic.team import *
 from .logic.match import *
 from .logic.points import *
 
-@api_view(['GET','POST'])
+@api_view(['GET'])
 @permission_classes([])
 def view_team(request):
     if request.method == 'GET':
@@ -53,4 +53,19 @@ def view_match(request):
 @api_view(['GET'])
 def view_ranking(request):
     if request.method == 'GET':
-        return Response(getRanking(),status=status.HTTP_200_OK)
+        return Response(getRanking(request.user.id),status=status.HTTP_200_OK)
+
+@api_view(['GET','POST'])
+def view_real_teams(request):
+    if request.method == 'GET':
+        return Response(getCurrentStepTeams(),status=status.HTTP_200_OK)
+    if request.method == 'POST':
+        step = request.query_params.get('step')
+        if step is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        step = int(step)
+        if step <= 4:
+            addQualifiedTeams(None,step,request.data)
+        elif step == 5:
+            addQualifiedPodium(None,request.data)
+        return Response(status=status.HTTP_200_OK)

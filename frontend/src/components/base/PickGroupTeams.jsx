@@ -108,7 +108,7 @@ class PickGroupTeams extends Component{
                         <Grid.Column style={{ maxWidth: 700 }}>
                             <Segment stacked>
                                 <h2>Elección de equipos</h2>
-                                <p>Por favor elija los dos equipos que cree pasarán de cada grupo</p>
+                                <p>Por favor elija los dos equipos que {this.props.label} de cada grupo</p>
                                 <WarningSignUpMessage />
                                 <Button color='red' onClick={() => this.handleSubmit()}>Siguiente</Button>
                                 <Message error

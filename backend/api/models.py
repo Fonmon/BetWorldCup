@@ -45,9 +45,10 @@ class UserPoints(models.Model):
 
 class QualifiedTeams(models.Model):
     round = models.CharField(choices=ROUND,null=False,max_length=5)
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,null=True,on_delete=models.CASCADE)
     team = models.ForeignKey(Team,on_delete=models.CASCADE)
     points = models.IntegerField(default=0)
+    real = models.BooleanField(default=False)
 
 class RegistrationCode(models.Model):
     auth_code = models.CharField(null=False, max_length=50)

@@ -5,3 +5,6 @@ def dictfetchall(cursor):
         dict(zip(columns, row))
         for row in cursor.fetchall()
     ]
+
+def listfetchsingle(cursor):
+    return [row[0] for row in cursor.fetchall()]

@@ -17,6 +17,13 @@ def calculateMatchPoints(result):
             userPoint.points = points
             userPoint.save()
 
+def calculateTeamPoints(result):
+    with transaction.atomic():
+        qualifiedTeamsQs = QualifiedTeams.objects.filter(round = result.round, team_id=result.team_id, real=False)
+        for qualifiedTeam in qualifiedTeamsQs:
+            qualifiedTeam.points = teamPoints(result.round)
+            qualifiedTeam.save()
+
 def matchPoints(real_result, user_result):
     points = 0
     if real_result.score_A == user_result.score_A:
@@ -31,9 +38,22 @@ def matchPoints(real_result, user_result):
         points += 5
     return points
 
-def getRanking():
+def teamPoints(round):
+    points = 0
+    if 'G' in round:
+        points = 5
+    elif round == 'R16' or round == 'C3':
+        points = 10
+    elif round == 'R8' or round == 'C2':
+        points = 15
+    elif round == 'C1':
+        points = 20
+    return points
+
+#TODO: when points are equal, order by exact score gotten
+def getRanking(user_id):
     with connection.cursor() as cursor:
-        cursor.execute('''SELECT user.first_name, user.last_name, (IF(matchpoints.points IS NULL, 0, matchpoints.points) + qualifiedpoints.points) AS points
+        cursor.execute('''SELECT user.first_name, user.last_name, (IF(matchpoints.points IS NULL, 0, matchpoints.points) + qualifiedpoints.points) AS points, IF(user.id = %s,true,false) AS is_current
                         FROM auth_user user LEFT JOIN (
                             SELECT user_id, SUM(points) AS points
                             FROM api_userpoints
@@ -42,7 +62,8 @@ def getRanking():
                         LEFT JOIN (
                             SELECT user_id, SUM(points) AS points
                             FROM api_qualifiedteams
+                            WHERE user_id IS NOT NULL
                             GROUP BY user_id
                         ) qualifiedpoints ON qualifiedpoints.user_id = user.id
-                        ORDER BY points DESC''')
+                        ORDER BY points DESC''',[user_id])
         return dictfetchall(cursor)
