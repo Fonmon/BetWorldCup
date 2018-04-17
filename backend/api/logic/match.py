@@ -16,7 +16,7 @@ def getMatchResults(user_id,is_real):
         user_operator = 'IS'
     with connection.cursor() as cursor:
         now = getNow()
-        cursor.execute('''SELECT matches.id as match_id, matches.date, IF(matches.score_A IS NULL,'',matches.score_A) AS team_A_score, IF(matches.score_B IS NULL,'',matches.score_B) AS team_B_score, matches.team_A_name, matches.team_A_shortcut, matches.team_A_id,matches.team_B_id, team.name AS team_B_name, team.shortcut AS team_B_shortcut, IF(matches.date ''' + date_operator + ''' %s,true,false) AS disabled, IF(matches.real IS NULL,false,matches.real) AS real_result, matches.result_id, matches.round
+        cursor.execute('''SELECT matches.id as match_id, matches.date, IF(matches.score_A IS NULL,'',matches.score_A) AS team_A_score, IF(matches.score_B IS NULL,'',matches.score_B) AS team_B_score, matches.team_A_name, matches.team_A_shortcut, matches.team_A_id,matches.team_B_id, team.name AS team_B_name, team.shortcut AS team_B_shortcut, IF(matches.date ''' + date_operator + ''' %s,true,false) AS disabled, IF(matches.real IS NULL,false,matches.real) AS real_result, matches.result_id, matches.round, IF(userpoints.points IS NULL, 0, userpoints.points) AS points
                         FROM api_team team, 
                         (
                             SELECT  matches.*, team.name AS team_A_name, team.shortcut AS team_A_shortcut
@@ -29,6 +29,7 @@ def getMatchResults(user_id,is_real):
                                 ) result ON result.match_id = api_match.id
                                 WHERE api_match.team_A_id IS NOT NULL AND api_match.team_B_id IS NOT NULL) matches
                             WHERE matches.team_A_id = team.id) matches
+                        LEFT JOIN api_userpoints userpoints ON userpoints.match_id = matches.id AND userpoints.user_id = matches.user_id
                         WHERE matches.team_B_id = team.id
                         ORDER BY date DESC''', [now,user_id])
         group_matches = dict()

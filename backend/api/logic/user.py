@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.db import IntegrityError,transaction
+from django.db import IntegrityError,transaction, connection
 from ..models import *
 from ..serializers import *
 from .team import *
@@ -42,3 +42,43 @@ def signup(signupData):
 def isStaff(user_id):
     user = User.objects.get(id = user_id)
     return user.is_staff
+
+def getPoints(user_id):
+    matchPoints = 0
+    teamPoints = 0
+    print(user_id)
+    with connection.cursor() as cursor:
+        cursor.execute('''SELECT SUM(points) AS points
+                        FROM api_userpoints
+                        WHERE user_id = %s
+                        GROUP BY user_id''',[user_id])
+        matchPoints = cursor.fetchall()[0][0]
+
+        cursor.execute('''SELECT SUM(points) AS points
+                        FROM api_qualifiedteams
+                        WHERE user_id = %s
+                        GROUP BY user_id''',[user_id])
+        teamPoints = cursor.fetchall()[0][0]
+    return int(matchPoints + teamPoints)
+
+def getTeamPoints(user_id):
+    teamsDict = dict()
+    with connection.cursor() as cursor:
+        cursor.execute('''SELECT qteams.id, teams.name, teams.shortcut, qteams.points, qteams.round
+                        FROM api_team teams JOIN api_qualifiedteams qteams ON teams.id = qteams.team_id
+                        WHERE qteams.real = false AND qteams.user_id = %s
+                        ORDER BY qteams.round''',[user_id])
+        for team in cursor.fetchall():
+            round = team[4]
+            if 'G' in round:
+                round = 'G'
+            if round not in teamsDict:
+                teamsDict[round] = []
+            teamsDict[round].append({
+                'id':team[0],
+                'name':team[1],
+                'shortcut':team[2],
+                'points':team[3],
+                'round':team[4]
+            })
+    return teamsDict

@@ -69,3 +69,13 @@ def view_real_teams(request):
         elif step == 5:
             addQualifiedPodium(None,request.data)
         return Response(status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def view_user_points(request):
+    if request.method == 'GET':
+        return Response(getPoints(request.user.id),status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def view_user_teams(request):
+    if request.method == 'GET':
+        return Response(getTeamPoints(request.user.id),status=status.HTTP_200_OK)

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Segment, Grid, Image, Header, Input, Button, Icon} from 'semantic-ui-react';
+import {Segment, Grid, Image, Header, Input, Button, Icon, Label} from 'semantic-ui-react';
 
 import Utils from '../../utils/Utils';
 
@@ -71,60 +71,61 @@ class MatchComponent extends Component{
     render(){
         const match_result = this.state.match_result;
         return (
-            <div>
-                <Segment style={{padding:0,width:270}} 
-                    color={match_result.disabled ? 'grey':null} 
-                    inverted={match_result.disabled}
-                >
-                    <h5 style={{textAlign:'center',paddingTop:5,marginBottom:5}}>{match_result.date}</h5>
-                    {!match_result.disabled &&
-                        <Button icon fluid
-                            onClick={()=>this.onSave()}
-                            color='green' style={{height:'100%'}}
-                        >
-                            <Icon name='save' /> Guardar
-                        </Button>
-                    }
-                    <Grid celled='internally' style={{marginBottom:0,marginTop:0}}>
-                        <Grid.Row>
-                            <Grid.Column style={{width:'80%'}}>
-                                <Header as='h5' image>
-                                    <Image src={require(`../../resources/images/team_icons/${match_result.team_A_shortcut}.png`)}
-                                        size='mini' />
-                                    <Header.Content>
-                                        {match_result.team_A_name}
-                                    </Header.Content>
-                                </Header>
-                            </Grid.Column>
-                            <Grid.Column style={{width:'20%',padding:0}}>
-                                <Input fluid size='big' transparent type='number'
-                                    style={{width:'100%',height:'100%',paddingLeft:5}}
-                                    disabled={match_result.disabled}
-                                    onChange={(evt,data) => this.onChange('team_A_score',data.value)}
-                                    value={match_result.team_A_score}/>
-                            </Grid.Column>
-                        </Grid.Row>
-                        <Grid.Row>
-                            <Grid.Column style={{width:'80%'}}>
-                                <Header as='h5' image>
-                                    <Image src={require(`../../resources/images/team_icons/${match_result.team_B_shortcut}.png`)}
-                                        size='mini' />
-                                    <Header.Content>
-                                        {match_result.team_B_name}
-                                    </Header.Content>
-                                </Header>
-                            </Grid.Column>
-                            <Grid.Column style={{width:'20%',padding:0}}>
-                                <Input fluid size='big' transparent type='number'
-                                    style={{width:'100%',height:'100%',paddingLeft:5}}
-                                    disabled={match_result.disabled}
-                                    onChange={(evt,data) => this.onChange('team_B_score',data.value)}
-                                    value={match_result.team_B_score}/>
-                            </Grid.Column>
-                        </Grid.Row>
-                    </Grid>
-                </Segment>
-            </div>
+            <Segment style={{padding:0,width:270}} 
+                color={match_result.disabled || this.props.showPoints ? 'grey':null} 
+                inverted={match_result.disabled || this.props.showPoints}
+            >
+                {this.props.showPoints &&
+                    <Label color='red' floating>{match_result.points} pts</Label>
+                }
+                <h5 style={{textAlign:'center',paddingTop:5,marginBottom:5}}>{match_result.date}</h5>
+                {(!match_result.disabled && !this.props.showPoints) &&
+                    <Button icon fluid
+                        onClick={()=>this.onSave()}
+                        color='green' style={{height:'100%'}}
+                    >
+                        <Icon name='save' /> Guardar
+                    </Button>
+                }
+                <Grid celled='internally' style={{marginBottom:0,marginTop:0}}>
+                    <Grid.Row>
+                        <Grid.Column style={{width:'80%'}}>
+                            <Header as='h5' image>
+                                <Image src={require(`../../resources/images/team_icons/${match_result.team_A_shortcut}.png`)}
+                                    size='mini' />
+                                <Header.Content>
+                                    {match_result.team_A_name}
+                                </Header.Content>
+                            </Header>
+                        </Grid.Column>
+                        <Grid.Column style={{width:'20%',padding:0}}>
+                            <Input fluid size='big' transparent type='number'
+                                style={{width:'100%',height:'100%',paddingLeft:5}}
+                                disabled={match_result.disabled || this.props.showPoints}
+                                onChange={(evt,data) => this.onChange('team_A_score',data.value)}
+                                value={match_result.team_A_score}/>
+                        </Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row>
+                        <Grid.Column style={{width:'80%'}}>
+                            <Header as='h5' image>
+                                <Image src={require(`../../resources/images/team_icons/${match_result.team_B_shortcut}.png`)}
+                                    size='mini' />
+                                <Header.Content>
+                                    {match_result.team_B_name}
+                                </Header.Content>
+                            </Header>
+                        </Grid.Column>
+                        <Grid.Column style={{width:'20%',padding:0}}>
+                            <Input fluid size='big' transparent type='number'
+                                style={{width:'100%',height:'100%',paddingLeft:5}}
+                                disabled={match_result.disabled || this.props.showPoints}
+                                onChange={(evt,data) => this.onChange('team_B_score',data.value)}
+                                value={match_result.team_B_score}/>
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
+            </Segment>
         );
     }
 }

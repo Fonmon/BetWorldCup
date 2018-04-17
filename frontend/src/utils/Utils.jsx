@@ -119,6 +119,22 @@ class Utils{
             }
         });
     }
+
+    static getMyPoints(){
+        return axios.get(`/api/user/points`,{
+            headers: {
+                'Authorization':`Token ${localStorage.getItem(TOKEN_KEY)}`
+            }
+        });
+    }
+
+    static getMyTeams(){
+        return axios.get(`/api/user/teams`,{
+            headers: {
+                'Authorization':`Token ${localStorage.getItem(TOKEN_KEY)}`
+            }
+        });
+    }
 }
 
 export default Utils;
