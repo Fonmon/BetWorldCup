@@ -50,7 +50,6 @@ def teamPoints(round):
         points = 20
     return points
 
-#TODO: when points are equal, order by exact score gotten
 def getRanking(user_id):
     with connection.cursor() as cursor:
         cursor.execute('''SELECT user.first_name, user.last_name, (IF(matchpoints.points IS NULL, 0, matchpoints.points) + qualifiedpoints.points) AS points, IF(user.id = %s,true,false) AS is_current
@@ -65,5 +64,11 @@ def getRanking(user_id):
                             WHERE user_id IS NOT NULL
                             GROUP BY user_id
                         ) qualifiedpoints ON qualifiedpoints.user_id = user.id
+                        LEFT JOIN (
+                            SELECT user_id, COUNT(*) AS num_exact
+                            FROM api_userpoints 
+                            WHERE points = 20
+                            GROUP BY user_id
+                        ) exactpoints ON exactpoints.user_id = user.id
                         ORDER BY points DESC''',[user_id])
         return dictfetchall(cursor)

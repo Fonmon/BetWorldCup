@@ -46,13 +46,14 @@ def isStaff(user_id):
 def getPoints(user_id):
     matchPoints = 0
     teamPoints = 0
-    print(user_id)
     with connection.cursor() as cursor:
         cursor.execute('''SELECT SUM(points) AS points
                         FROM api_userpoints
                         WHERE user_id = %s
                         GROUP BY user_id''',[user_id])
-        matchPoints = cursor.fetchall()[0][0]
+        matchPointsCursor = cursor.fetchall()
+        if len(matchPointsCursor) != 0:
+            matchPoints = matchPointsCursor[0][0]
 
         cursor.execute('''SELECT SUM(points) AS points
                         FROM api_qualifiedteams
