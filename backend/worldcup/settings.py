@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -144,27 +143,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'filters': {
-#         'require_debug_false': {
-#             '()':'django.utils.log.RequireDebugFalse'
-#         }
-#     },
-#     'handlers': {
-#         'console': {
-#             'level': 'ERROR',
-#             'filters': ['require_debug_false'],
-#             'class': 'logging.StreamHandler'
-#         }
-#     },
-#     'loggers': {
-#         'django': {
-#             'handlers': ['console'],
-#             'level': 'ERROR',
-#             'propagate': True
-#         }
-#     }
-# }

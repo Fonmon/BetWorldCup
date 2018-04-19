@@ -1,0 +1,23 @@
+version: '2.2'
+services:
+  db:
+    restart: always
+    build: ./db
+    image: betworldcup_db
+    container_name: betworldcup_db
+    environment:
+      MYSQL_DATABASE: $MYSQL_DATABASE
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+  app:
+    restart: always
+    build: .
+    image: betworldcup_app
+    container_name: betworldcup_app
+    links:
+      - "db"
+    env_file: .env
+    ports:
+      - 80:80
+      - 443:443
