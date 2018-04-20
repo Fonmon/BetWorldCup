@@ -1,7 +1,7 @@
 FROM python:alpine3.7
 MAINTAINER Miguel Montañez <cmiguelmg@gmail.com>
 
-RUN apk update
+RUN apk update && apk add ca-certificates && update-ca-certificates
 RUN apk add nodejs
 RUN apk add mariadb-dev build-base mariadb-client-libs
 
