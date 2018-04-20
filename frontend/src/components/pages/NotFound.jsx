@@ -2,11 +2,14 @@ import React from 'react';
 import {Container, Message} from 'semantic-ui-react';
 
 import FixedMenu from '../base/FixedMenu';
+import Utils from '../../utils/Utils';
 
 const NotFound = () => {
     return (
         <div>
-            <FixedMenu />
+            {Utils.isAuthenticated() &&
+                <FixedMenu />
+            }
             <Container style={{marginTop:'7em'}}>
                 <Message icon='announcement'
                     header='Página no encontrada'

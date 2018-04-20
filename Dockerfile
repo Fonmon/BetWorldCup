@@ -16,7 +16,5 @@ RUN npm install && npm run build
 WORKDIR /app/backend
 RUN pip install -r requirements.txt
 
-ADD start_app.sh /app/backend/start_app.sh
-
 EXPOSE 8080
 CMD sh start_app.sh

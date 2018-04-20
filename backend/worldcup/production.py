@@ -2,7 +2,7 @@ from .settings import *
 
 DEBUG = False
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
-ALLOWED_HOSTS = [os.environ.get('DJANGO_ALLOWED_HOSTS'),'localhost']
+ALLOWED_HOSTS = [os.environ.get('DJANGO_ALLOWED_HOSTS')]
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "assets"),

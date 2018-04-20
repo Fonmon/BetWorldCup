@@ -1,25 +1,36 @@
-version: '3.2'
+version: '2.3'
 services:
   db:
     restart: always
-    build: ./db
-    image: betworldcup_db
+    image: mysql
     container_name: betworldcup_db
     environment:
       MYSQL_DATABASE: $MYSQL_DATABASE
       MYSQL_USER: $MYSQL_USER
       MYSQL_PASSWORD: $MYSQL_PASSWORD
       MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+    expose:
+      - 3306
+    healthcheck:
+      test: mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -e 'use betworldcup'
+      interval: 10s
+      retries: 5
+      timeout: 5s
   app:
     restart: always
     build: .
     image: betworldcup_app
     container_name: betworldcup_app
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     env_file: .env
     expose:
       - 8080
+    volumes:
+      - type: volume
+        source: static
+        target: /app/backend/assets
   web:
     image: nginx:alpine
     container_name: betworldcup_web
@@ -30,6 +41,11 @@ services:
       - type: bind
         source: ./nginx.conf
         target: /etc/nginx/nginx.conf
+      - type: volume
+        source: static
+        target: /usr/share/nginx/html
     ports:
       - 80:80
       - 443:443
+volumes:
+  static:

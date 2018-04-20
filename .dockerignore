@@ -1,0 +1,7 @@
+*/*/migrations/
+*/*/__pycache__/
+*/assets/
+*/env/
+
+*/node_modules/
+*/package-lock.json
