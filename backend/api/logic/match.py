@@ -67,8 +67,7 @@ def saveMatchResult(user_id, match_result, is_real):
     return (False,match_result)
 
 def getNow():
-    fakeDate = date(2018,6,26)
-    fakeTime = time(6,00)
-    fakeNow = datetime.combine(fakeDate,fakeTime)
-    #datetime.now()
-    return fakeNow + timedelta(hours=1)
+    # fakeDate = date(2018,6,26)
+    # fakeTime = time(6,00)
+    # fakeNow = datetime.combine(fakeDate,fakeTime)
+    return datetime.now() + timedelta(hours=1)
