@@ -22,7 +22,7 @@ const Rules = () => (
                             <List.Item>Equipo que ocupa el tercer puesto</List.Item>
                         </List.List>
                     </List.Item>
-                    <List.Item>Podrá inscribir el de cada partido hasta 1 hora antes de cada encuentro</List.Item>
+                    <List.Item>Podrá inscribir el marcador de cada partido hasta 1 hora antes de cada encuentro</List.Item>
                 </List>
                 <Divider />
                 <h2>Puntos ganados</h2>
