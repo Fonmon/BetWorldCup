@@ -33,10 +33,10 @@ def view_user(request):
         return Response(message, status = status.HTTP_409_CONFLICT)
 
 @api_view(['GET'])
-def view_is_staff(request):
+def view_user_info(request):
     user_id = request.user.id
     if request.method == 'GET':
-        return Response(isStaff(user_id), status = status.HTTP_200_OK)
+        return Response(getInfo(user_id), status = status.HTTP_200_OK)
 
 @api_view(['GET','PATCH'])
 def view_match(request):

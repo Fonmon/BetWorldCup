@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Form, Grid, Message, Segment } from 'semantic-ui-react';
 
-import Utils, {TOKEN_KEY} from '../../utils/Utils';
+import Utils, {TOKEN_KEY,STAFF_KEY,USERNAME_KEY} from '../../utils/Utils';
 
 class Login extends Component{
     
@@ -23,7 +23,15 @@ class Login extends Component{
         Utils.authenticate(username,this.state.password)
             .then(function(response){
                 localStorage.setItem(TOKEN_KEY,response.data.token);
-                Utils.redirectTo('/home');
+                Utils.getInfo()
+                    .then(function(response){
+                        localStorage.setItem(STAFF_KEY,response.data.is_staff);
+                        localStorage.setItem(USERNAME_KEY,response.data.username);
+                        Utils.redirectTo('/home');
+                    }).catch(function(error){
+                        if(!error.response)
+                            console.log('Error de conexión');
+                    });
             }).catch(function(error){
                 if(!error.response)
                     console.log('error de conexión');

@@ -11,6 +11,7 @@ export const WarningSignUpMessage = () => (
 
 export const TOKEN_KEY = "TOKEN_WORLDCUP_KEY";
 export const STAFF_KEY = "IS_STAFF_KEY";
+export const USERNAME_KEY = "USERNAME_KEY";
 export const ROUND = {
     'GA':'Grupo A',
     'GB':'Grupo B',
@@ -88,8 +89,8 @@ class Utils{
         });
     }
 
-    static isStaff(){
-        return axios.get(`/api/user/is_staff`,{
+    static getInfo(){
+        return axios.get(`/api/user/info`,{
             headers: {
                 'Authorization':`Token ${localStorage.getItem(TOKEN_KEY)}`
             }

@@ -23,6 +23,7 @@ const Rules = () => (
                         </List.List>
                     </List.Item>
                     <List.Item>Podrá inscribir el marcador de cada partido hasta 1 hora antes de cada encuentro</List.Item>
+                    <List.Item>Para los partidos de las Fases de Eliminación Directa, se tendrá en cuenta el marcador hasta los 120 minutos. No se tendrá en cuenta los penaltis</List.Item>
                 </List>
                 <Divider />
                 <h2>Puntos ganados</h2>

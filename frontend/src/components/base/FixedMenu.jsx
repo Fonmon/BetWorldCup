@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Menu } from 'semantic-ui-react';
 
-import Utils from '../../utils/Utils';
+import Utils,{USERNAME_KEY} from '../../utils/Utils';
 
 const FixedMenu = () => (
     <div>
@@ -14,8 +14,10 @@ const FixedMenu = () => (
                 {Utils.isAuthorized() &&
                     <Menu.Item active={window.location.pathname === '/results'} as='a' href='/results'>Reales</Menu.Item>
                 }
-                <Menu.Item position='right' onClick={() => Utils.signOut()}
-                    as='a'>Cerrar sesión</Menu.Item>
+                <Menu.Menu position='right'>
+                    <Menu.Item as='span'>{localStorage.getItem(USERNAME_KEY)}</Menu.Item>
+                    <Menu.Item onClick={() => Utils.signOut()} as='a'>Cerrar sesión</Menu.Item>
+                </Menu.Menu>
             </Container>
         </Menu>
     </div>

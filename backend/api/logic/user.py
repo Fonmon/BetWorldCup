@@ -39,9 +39,12 @@ def signup(signupData):
         addQualifiedPodium(user.id, signupData['step_5'])
     return (True,'')
 
-def isStaff(user_id):
+def getInfo(user_id):
     user = User.objects.get(id = user_id)
-    return user.is_staff
+    return {
+        'is_staff':user.is_staff,
+        'username':user.username
+    }
 
 def getPoints(user_id):
     matchPoints = 0
