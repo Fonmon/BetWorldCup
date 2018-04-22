@@ -2,5 +2,6 @@
 
 pwd=$1
 file_sql=$2
+codes_len=$3
 docker exec -i betworldcup_db mysql --default-character-set=utf8 -uworldcupuser -p${pwd} betworldcup < $file_sql
-./../utils/generate_inserts.py | docker exec -i betworldcup_db mysql --default-character-set=utf8 -uworldcupuser -p${pwd} betworldcup
+./../utils/generate_inserts.py $codes_len | docker exec -i betworldcup_db mysql --default-character-set=utf8 -uworldcupuser -p${pwd} betworldcup

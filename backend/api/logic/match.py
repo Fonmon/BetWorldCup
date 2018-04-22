@@ -70,4 +70,5 @@ def getNow():
     # fakeDate = date(2018,6,26)
     # fakeTime = time(6,00)
     # fakeNow = datetime.combine(fakeDate,fakeTime)
+    # datetime.now()
     return datetime.now() + timedelta(hours=1)

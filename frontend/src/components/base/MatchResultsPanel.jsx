@@ -27,6 +27,15 @@ class MatchResultsPanel extends Component{
             });
     }
 
+    onSave(matchResult, index, round){
+        let matches = this.state.matches,
+            group = matches[round];
+        group[index].result_id = matchResult.id;
+        group[index].team_A_score = matchResult.score_A;
+        group[index].team_B_score = matchResult.score_B;
+        this.setState({matches:matches});
+    }
+
     render(){
         return (
             <Container style={{marginTop:'4em'}}>
@@ -59,9 +68,10 @@ class MatchResultsPanel extends Component{
                                 <Grid columns={3} style={{paddingLeft:50}}>
                                     {this.state.matches[round].map((match,j)=>{
                                         return (
-                                            <Grid.Column key={j}>
+                                            <Grid.Column key={match.match_id}>
                                                 <MatchComponent match={match} real={this.state.real} 
-                                                    showPoints={this.props.showPoints}/>
+                                                    showPoints={this.props.showPoints}
+                                                    onSave={(result) => this.onSave(result,j,round)}/>
                                             </Grid.Column>
                                         )
                                     })}
@@ -75,11 +85,12 @@ class MatchResultsPanel extends Component{
                     <Segment>
                         <h2>{ROUND[this.state.group]}</h2>
                         <Grid columns={3} style={{paddingLeft:50}}>
-                            {this.state.matches[this.state.group].map((match)=>{
+                            {this.state.matches[this.state.group].map((match,i)=>{
                                 return (
                                     <Grid.Column key={match.match_id}>
                                         <MatchComponent match={match} real={this.state.real} 
-                                            showPoints={this.props.showPoints}/>
+                                            showPoints={this.props.showPoints}
+                                            onSave={(result) => this.onSave(result,i,this.state.group)}/>
                                     </Grid.Column>
                                 )
                             })}

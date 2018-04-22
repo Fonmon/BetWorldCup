@@ -26,7 +26,8 @@ class MatchComponent extends Component{
         super(props);
         this.state = {
             match_result:props.match,
-            real:props.real
+            real:props.real,
+            buttonSave: 'green'
         }
     }
 
@@ -38,6 +39,7 @@ class MatchComponent extends Component{
                     score_A = response.data.score_A,
                     score_B = response.data.score_B;
                 scope.setState({
+                    buttonSave:'green',
                     match_result:{
                         ...scope.state.match_result,
                         result_id: result_id,
@@ -45,6 +47,7 @@ class MatchComponent extends Component{
                         team_B_score : score_B
                     }
                 });
+                scope.props.onSave(response.data);
             }).catch(function(error){
                 if(!error.response)
                     console.log('Error de conexión');
@@ -65,7 +68,7 @@ class MatchComponent extends Component{
 
     onChange(score,value){
         if(value >= 0)
-            this.setState({match_result:{...this.state.match_result,[score]:value}});
+            this.setState({buttonSave:'blue',match_result:{...this.state.match_result,[score]:value}});
     }
 
     render(){
@@ -82,7 +85,7 @@ class MatchComponent extends Component{
                 {(!match_result.disabled && !this.props.showPoints) &&
                     <Button icon fluid
                         onClick={()=>this.onSave()}
-                        color='green' style={{height:'100%'}}
+                        color={this.state.buttonSave} style={{height:'100%'}}
                     >
                         <Icon name='save' /> Guardar
                     </Button>

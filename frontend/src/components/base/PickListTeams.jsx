@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Button, Grid, Message, Segment, Table, Image, Header } from 'semantic-ui-react';
 
-import {WarningSignUpMessage} from '../../utils/Utils';
+import {ROUND,WarningSignUpMessage} from '../../utils/Utils';
 
 class PickListTeams extends Component{
 
@@ -81,7 +81,7 @@ class PickListTeams extends Component{
                     </Grid.Row>
                     <Grid.Row columns={1} style={{ maxWidth: 700 }}>
                         <Segment stacked>
-                            <h3>Ronda {this.state.round}</h3>
+                            <h3>{ROUND[`R${this.state.round}`]}</h3>
                                 <Table celled selectable >
                                     <Table.Body>
                                         {this.state.dataSource && this.state.dataSource.map((team,i) => {
