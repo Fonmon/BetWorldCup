@@ -37,6 +37,7 @@ class MatchResult(models.Model):
     score_B = models.IntegerField(null=True)
     real = models.BooleanField(default=False,null=False)
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    last_modified = models.DateTimeField(auto_now=True)
 
 class UserPoints(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)

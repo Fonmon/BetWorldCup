@@ -2,8 +2,12 @@ FROM python:alpine3.7
 MAINTAINER Miguel Montañez <cmiguelmg@gmail.com>
 
 RUN apk update && apk add ca-certificates && update-ca-certificates
-RUN apk add --no-cache nodejs
+RUN apk add --no-cache nodejs tzdata
 RUN apk add --no-cache mariadb-dev g++
+
+RUN cp /usr/share/zoneinfo/America/Bogota /etc/localtime
+RUN echo "America/Bogota" > /etc/timezone
+RUN apk del tzdata
 
 WORKDIR /app/frontend
 

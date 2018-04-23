@@ -36,6 +36,7 @@ class Ranking extends Component{
                                 <Table.HeaderCell>Posición</Table.HeaderCell>
                                 <Table.HeaderCell>Nombre</Table.HeaderCell>
                                 <Table.HeaderCell>Puntos</Table.HeaderCell>
+                                <Table.HeaderCell>Partidos Marcador exacto</Table.HeaderCell>
                             </Table.Row>
                         </Table.Header>
 
@@ -46,6 +47,7 @@ class Ranking extends Component{
                                         <Table.Cell>{i+1}</Table.Cell>
                                         <Table.Cell>{user.first_name + ' ' + user.last_name}</Table.Cell>
                                         <Table.Cell>{user.points}</Table.Cell>
+                                        <Table.Cell>{user.num_exact}</Table.Cell>
                                     </Table.Row>
                                 );
                             })}

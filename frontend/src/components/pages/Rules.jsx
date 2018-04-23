@@ -24,6 +24,8 @@ const Rules = () => (
                     </List.Item>
                     <List.Item>Podrá inscribir el marcador de cada partido hasta 1 hora antes de cada encuentro</List.Item>
                     <List.Item>Para los partidos de las Fases de Eliminación Directa, se tendrá en cuenta el marcador hasta los 120 minutos. No se tendrá en cuenta los penaltis</List.Item>
+                    <List.Item>El Ganador de la Polla será el que más puntos acumule al final del Mundial, en caso de que existan participantes con el mismo puntaje, el siguiente ítem de desempate será el que haya acertado a más partidos con puntaje perfecto (es decir 20 puntos por partido). Si persiste el empate, el premio se repartirá entre los participantes por partes iguales
+                    </List.Item>
                 </List>
                 <Divider />
                 <h2>Puntos ganados</h2>
