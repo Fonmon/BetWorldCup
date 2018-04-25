@@ -38,10 +38,6 @@ class MatchResult(models.Model):
     real = models.BooleanField(default=False,null=False)
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     last_modified = models.DateTimeField(auto_now=True)
-
-class UserPoints(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
-    match = models.ForeignKey(Match,on_delete=models.CASCADE,null=True)
     points = models.IntegerField(default=0)
 
 class QualifiedTeams(models.Model):

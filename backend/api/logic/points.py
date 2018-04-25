@@ -5,17 +5,10 @@ from .utils import *
 def calculateMatchPoints(result):
     with transaction.atomic():
         matchResultsQs = MatchResult.objects.filter(match_id = result.match_id, real = False)
-        userPointsQs = UserPoints.objects.filter(match_id = result.match_id)
         for matchResult in matchResultsQs:
             points = matchPoints(result,matchResult)
-            try:
-                userPoint = userPointsQs.get(user_id = matchResult.user_id)
-            except UserPoints.DoesNotExist:
-                userPoint = UserPoints()
-                userPoint.user_id = matchResult.user_id
-                userPoint.match_id = matchResult.match_id
-            userPoint.points = points
-            userPoint.save()
+            matchResult.points = points
+            matchResult.save()
 
 def calculateTeamPoints(result):
     with transaction.atomic():
@@ -55,7 +48,8 @@ def getRanking(user_id):
         cursor.execute('''SELECT user.first_name, user.last_name, (IF(matchpoints.points IS NULL, 0, matchpoints.points) + qualifiedpoints.points) AS points, IF(user.id = %s,true,false) AS is_current, IF(exactpoints.num_exact IS NULL,0,exactpoints.num_exact) AS num_exact
                         FROM auth_user user LEFT JOIN (
                             SELECT user_id, SUM(points) AS points
-                            FROM api_userpoints
+                            FROM api_matchresult
+                            WHERE user_id IS NOT NULL
                             GROUP BY user_id
                         ) matchpoints ON matchpoints.user_id = user.id
                         LEFT JOIN (
@@ -66,8 +60,8 @@ def getRanking(user_id):
                         ) qualifiedpoints ON qualifiedpoints.user_id = user.id
                         LEFT JOIN (
                             SELECT user_id, COUNT(*) AS num_exact
-                            FROM api_userpoints 
-                            WHERE points = 20
+                            FROM api_matchresult 
+                            WHERE points = 20 AND user_id IS NOT NULL
                             GROUP BY user_id
                         ) exactpoints ON exactpoints.user_id = user.id
                         ORDER BY points DESC, num_exact DESC''',[user_id])

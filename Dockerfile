@@ -7,7 +7,6 @@ RUN apk add --no-cache mariadb-dev g++
 
 RUN cp /usr/share/zoneinfo/America/Bogota /etc/localtime
 RUN echo "America/Bogota" > /etc/timezone
-#RUN apk del tzdata
 
 WORKDIR /app/frontend
 

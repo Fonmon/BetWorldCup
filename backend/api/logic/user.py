@@ -51,7 +51,7 @@ def getPoints(user_id):
     teamPoints = 0
     with connection.cursor() as cursor:
         cursor.execute('''SELECT SUM(points) AS points
-                        FROM api_userpoints
+                        FROM api_matchresult
                         WHERE user_id = %s
                         GROUP BY user_id''',[user_id])
         matchPointsCursor = cursor.fetchall()

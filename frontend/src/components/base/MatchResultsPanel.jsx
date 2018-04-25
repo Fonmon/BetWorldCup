@@ -37,6 +37,31 @@ class MatchResultsPanel extends Component{
     }
 
     render(){
+        let finalsComponent = null;
+        if(this.state.matches['R3'] && this.state.matches['R2']){
+            let thirdMatch = this.state.matches['R3'][0];
+            let finalMatch = this.state.matches['R2'][0];
+            finalsComponent = (
+                <Grid columns={2} style={{paddingLeft:50}}>
+                    <Grid.Column>
+                        <h4 style={{marginLeft:40}}>Partido tercer lugar</h4>
+                        <MatchComponent match={thirdMatch} real={this.state.real} 
+                            showPoints={this.props.showPoints}
+                            onSave={(result) => this.onSave(result,0,'R3')}/>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <h4 style={{marginLeft:40}}>Final</h4>
+                        <MatchComponent match={finalMatch} real={this.state.real} 
+                            showPoints={this.props.showPoints}
+                            onSave={(result) => this.onSave(result,0,'R2')}/>
+                    </Grid.Column>
+                </Grid>
+            );
+        }else{
+            finalsComponent = (
+                <p>Aún no está configurada esta instancia. Vuelve luego.</p>
+            )
+        }
         return (
             <Container style={{marginTop:'4em'}}>
                 <center>
@@ -58,8 +83,18 @@ class MatchResultsPanel extends Component{
                         <Button onClick={() => this.setState({group:'GH'})}
                             active={this.state.group === 'GH'}>Grupo H</Button>
                     </Button.Group>
+                    <Button.Group size='big' color='teal' style={{marginTop:5}}>
+                        <Button onClick={() => this.setState({group:'R16'})}
+                            active={this.state.group === 'R16'}>Octavos de final</Button>
+                        <Button onClick={() => this.setState({group:'R8'})}
+                            active={this.state.group === 'R8'}>Cuartos de final</Button>
+                        <Button onClick={() => this.setState({group:'R4'})}
+                            active={this.state.group === 'R4'}>Semifinales</Button>
+                        <Button onClick={() => this.setState({group:'R2'})}
+                            active={this.state.group === 'R2'}>Finales</Button>
+                    </Button.Group>
                 </center>
-                {Object.keys(this.state.matches).map((round,i)=>{
+                {/* {Object.keys(this.state.matches).map((round,i)=>{
                     let basicGrid;
                     if(round.charAt(0) !== 'G'){
                         basicGrid = (
@@ -80,8 +115,8 @@ class MatchResultsPanel extends Component{
                         )
                     }
                     return basicGrid;
-                })}
-                {this.state.matches[this.state.group] &&
+                })} */}
+                {this.state.group !== 'R2' && this.state.matches[this.state.group] &&
                     <Segment>
                         <h2>{ROUND[this.state.group]}</h2>
                         <Grid columns={3} style={{paddingLeft:50}}>
@@ -95,6 +130,18 @@ class MatchResultsPanel extends Component{
                                 )
                             })}
                         </Grid>
+                    </Segment>
+                }
+                {this.state.group !== 'R2' && !this.state.matches[this.state.group] &&
+                    <Segment>
+                        <h2>{ROUND[this.state.group]}</h2>
+                        <p>Aún no está configurada esta instancia. Vuelve luego.</p>
+                    </Segment>
+                }
+                {this.state.group === 'R2' &&
+                    <Segment>
+                        <h2>Partidos finales</h2>
+                        {finalsComponent}
                     </Segment>
                 }
             </Container>
