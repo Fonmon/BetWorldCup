@@ -29,14 +29,14 @@ class Ranking extends Component{
         return(
             <div>
                 <FixedMenu />
-                <Container style={{marginTop:'7em'}}>
+                <Container style={{marginTop:'7em', width:700}}>
                     <Table fixed>
                         <Table.Header>
                             <Table.Row>
-                                <Table.HeaderCell>Posición</Table.HeaderCell>
-                                <Table.HeaderCell>Nombre</Table.HeaderCell>
-                                <Table.HeaderCell>Puntos</Table.HeaderCell>
-                                <Table.HeaderCell>Partidos Marcador exacto</Table.HeaderCell>
+                                <Table.HeaderCell style={{width:'15%'}}>Posición</Table.HeaderCell>
+                                <Table.HeaderCell style={{width:'50%'}}>Nombre</Table.HeaderCell>
+                                <Table.HeaderCell style={{width:'15%'}}>Puntos</Table.HeaderCell>
+                                <Table.HeaderCell textAlign='center' style={{width:'20%'}}>Partidos Marcador exacto</Table.HeaderCell>
                             </Table.Row>
                         </Table.Header>
 
@@ -44,10 +44,10 @@ class Ranking extends Component{
                             {this.state.ranking.map((user,i) => {
                                 return (
                                     <Table.Row active={user.is_current === 1} key={i}>
-                                        <Table.Cell>{i+1}</Table.Cell>
+                                        <Table.Cell textAlign='center'>{i+1}</Table.Cell>
                                         <Table.Cell>{user.first_name + ' ' + user.last_name}</Table.Cell>
                                         <Table.Cell>{user.points}</Table.Cell>
-                                        <Table.Cell>{user.num_exact}</Table.Cell>
+                                        <Table.Cell textAlign='center'>{user.num_exact}</Table.Cell>
                                     </Table.Row>
                                 );
                             })}
