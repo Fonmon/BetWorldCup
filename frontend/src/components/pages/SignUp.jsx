@@ -57,7 +57,7 @@ class SignUp extends Component{
                         header:'Éxito',
                         message:'Registro realizado exitosamente. Será redirigido a la pantalla de inicio para que pueda iniciar sesión.'
                     });
-                    setTimeout(()=>Utils.redirectTo('/login'),6000);
+                    setTimeout(()=>Utils.redirectTo('/login'),5000);
                 });
             }).catch(function(error){
                 if(!error.response)

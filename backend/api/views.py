@@ -79,3 +79,16 @@ def view_user_points(request):
 def view_user_teams(request):
     if request.method == 'GET':
         return Response(getTeamPoints(request.user.id),status=status.HTTP_200_OK)
+
+@api_view(['PATCH'])
+def view_user_backend(request):
+    request_user = request.user.id
+    if request.method == 'PATCH':
+        code = changePassword(request_user, request.data)
+        if code == 400:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        if code == 401:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        if code == 404:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_200_OK)

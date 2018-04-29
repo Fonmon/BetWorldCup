@@ -15,15 +15,28 @@ class PersonalInfo extends Component{
             authCode: '',
             formError:false,
             errorMessage:'',
+            formWarning:false,
         }
     }
 
-    handleChange = (e, { name, value }) => this.setState({ [name]: value })
+    handleChange = (e, { name, value }) => {
+        if(name === 'username')
+            if(!this.isUsernameValid(value)){
+                this.setState({formWarning:true});
+                return;
+            }
+        this.setState({ [name]: value, formWarning: false });
+    }
+
+    isUsernameValid(username){
+        username = username.trim();
+        return !username.includes(' ');
+    }
 
     handleSubmit = () => {
         this.setState({formError:false});
         let personalInfo = {
-            username: this.state.username,
+            username: this.state.username.trim(),
             authCode: this.state.authCode
         };
         let scope = this;
@@ -62,7 +75,8 @@ class PersonalInfo extends Component{
                         <Segment stacked>
                             <h2>Información personal</h2>
                             <WarningSignUpMessage />
-                            <Form size='large' onSubmit={this.handleSubmit} error={this.state.formError}>
+                            <Form size='large' onSubmit={this.handleSubmit} error={this.state.formError}
+                                warning={this.state.formWarning}>
                                 <Form.Input fluid name="names"
                                     value={names}
                                     required
@@ -81,6 +95,11 @@ class PersonalInfo extends Component{
                                     placeholder='Nombre de usuario'
                                     onChange={this.handleChange}
                                 />
+                                <Message warning
+                                    size='tiny'
+                                    header='Nombre de usuario inválido'
+                                    content='El nombre de usuario no debe contener espacios en blanco.'
+                                />
                                 <Form.Input value={password}
                                     fluid name="password"
                                     placeholder='Contraseña'
@@ -95,6 +114,7 @@ class PersonalInfo extends Component{
                                     onChange={this.handleChange}
                                 />
                                 <Message error
+                                    size='tiny'
                                     header='Error'
                                     content={this.state.errorMessage}
                                 />

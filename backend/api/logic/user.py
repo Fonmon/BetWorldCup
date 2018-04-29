@@ -86,3 +86,18 @@ def getTeamPoints(user_id):
                 'round':team[4]
             })
     return teamsDict
+
+def changePassword(admin_user_id, data):
+    admin_user = User.objects.get(id = admin_user_id)
+    if 'password' not in data or 'user_id' not in data:
+        return 400
+    if admin_user.is_staff:
+        user_id = data['user_id']
+        try:
+            user = User.objects.get(id = user_id)
+        except User.DoesNotExist:
+            return 404
+        user.set_password(data['password'])
+        user.save()
+        return 200
+    return 401
