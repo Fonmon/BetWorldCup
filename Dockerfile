@@ -11,10 +11,11 @@ RUN echo "America/Bogota" > /etc/timezone
 WORKDIR /app/frontend
 
 ADD frontend/ /app/frontend/
-ADD backend/ /app/backend/
 
 RUN npm install
 RUN npm run build
+
+ADD backend/ /app/backend/
 
 WORKDIR /app/backend
 RUN pip install --no-cache-dir -r requirements.txt
