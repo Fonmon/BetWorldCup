@@ -42,7 +42,7 @@ class MatchResultsPanel extends Component{
             let thirdMatch = this.state.matches['R3'][0];
             let finalMatch = this.state.matches['R2'][0];
             finalsComponent = (
-                <Grid columns={2} style={{paddingLeft:50}}>
+                <Grid stackable columns={2} style={{paddingLeft:50}}>
                     <Grid.Column>
                         <h4 style={{marginLeft:40}}>Partido tercer lugar</h4>
                         <MatchComponent match={thirdMatch} real={this.state.real} 
@@ -117,9 +117,9 @@ class MatchResultsPanel extends Component{
                     return basicGrid;
                 })} */}
                 {this.state.group !== 'R2' && this.state.matches[this.state.group] &&
-                    <Segment>
+                    <Segment style={{overflow:'hidden'}}>
                         <h2>{ROUND[this.state.group]}</h2>
-                        <Grid stackableq columns={3} style={{paddingLeft:50}}>
+                        <Grid stackable columns={3} style={{paddingLeft:50}}>
                             {this.state.matches[this.state.group].map((match,i)=>{
                                 return (
                                     <Grid.Column key={match.match_id}>
@@ -133,13 +133,13 @@ class MatchResultsPanel extends Component{
                     </Segment>
                 }
                 {this.state.group !== 'R2' && !this.state.matches[this.state.group] &&
-                    <Segment>
+                    <Segment style={{overflow:'hidden'}}>
                         <h2>{ROUND[this.state.group]}</h2>
                         <p>Aún no está configurada esta instancia. Vuelve luego.</p>
                     </Segment>
                 }
                 {this.state.group === 'R2' &&
-                    <Segment>
+                    <Segment style={{overflow:'hidden'}}>
                         <h2>Partidos finales</h2>
                         {finalsComponent}
                     </Segment>
