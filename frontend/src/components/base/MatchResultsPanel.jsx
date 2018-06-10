@@ -119,7 +119,7 @@ class MatchResultsPanel extends Component{
                 {this.state.group !== 'R2' && this.state.matches[this.state.group] &&
                     <Segment>
                         <h2>{ROUND[this.state.group]}</h2>
-                        <Grid columns={3} style={{paddingLeft:50}}>
+                        <Grid stackableq columns={3} style={{paddingLeft:50}}>
                             {this.state.matches[this.state.group].map((match,i)=>{
                                 return (
                                     <Grid.Column key={match.match_id}>

@@ -118,3 +118,4 @@ bundles/
 migrations/
 package-lock.json
 certificates/
+.vscode/
