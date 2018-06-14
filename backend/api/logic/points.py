@@ -64,5 +64,5 @@ def getRanking(user_id):
                             WHERE points = 20 AND user_id IS NOT NULL
                             GROUP BY user_id
                         ) exactpoints ON exactpoints.user_id = user.id
-                        ORDER BY points DESC, num_exact DESC''',[user_id])
+                        ORDER BY points DESC, num_exact DESC, user.id ASC''',[user_id])
         return dictfetchall(cursor)
