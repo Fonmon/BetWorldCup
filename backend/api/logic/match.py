@@ -45,9 +45,19 @@ def saveMatchResult(user_id, match_result, is_real):
     match_date = datetime.strptime(match_result['date'],dateFormat)
     if is_real or now < match_date:
         result = MatchResult()
-        if match_result['result_id'] is not None:
+        match_id = int(match_result['match_id'])
+        match_stored = []
+        if is_real:
+            match_stored = MatchResult.objects.filter(match_id = match_id, user_id = None, real = True)
+        else:
+            match_stored = MatchResult.objects.filter(match_id = match_id, user_id = user_id)
+
+        if len(match_stored) == 1:
+            result.id = match_stored[0].id
+        elif match_result['result_id'] is not None:
             result.id = int(match_result['result_id'])
-        result.match_id = int(match_result['match_id'])
+        
+        result.match_id = match_id
         result.score_A = 0 if match_result['team_A_score'] == '' else int(match_result['team_A_score'])
         result.score_B = 0 if match_result['team_B_score'] == '' else int(match_result['team_B_score'])
         result.real = is_real
